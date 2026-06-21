@@ -299,19 +299,19 @@ class FileUtil
     }
 
     return false;
-    ‎#elseif android
-‎  haxe.ui.containers.dialogs.Dialogs.saveFile(function(button, result, path):Void
-‎  {
-‎    if (result)
-‎    {
-‎      if (onSave != null) { onSave(path ?? defaultFileName ?? ''); }
-‎    }
-‎    else
-‎    {
-‎      if (onCancel != null) { onCancel(); }
-‎    }
-‎  }, { name: defaultFileName, bytes: data });
-‎  return true;
+    #elseif android
+    haxe.ui.containers.dialogs.Dialogs.saveFile(function(button, result, path):Void
+    {
+      if (result)
+      {
+        if (onSave != null) { onSave(path ?? defaultFileName ?? ''); }
+      }
+      else
+      {
+        if (onCancel != null) { onCancel(); }
+      }
+    }, { name: defaultFileName, bytes: data });
+    return true;
     #else
     FileDialog.saveFile(Lib.current.stage.window, function(filepath:String, filter):Void
     {

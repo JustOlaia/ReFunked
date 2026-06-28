@@ -1,0 +1,76 @@
+name: Build Android APK
+
+on:
+  push:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+jobs:
+  build-android:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          submodules: 'recursive'
+
+      - name: Setup Java 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Install Android SDK components
+        run: |
+          sdkmanager \
+            "build-tools;35.0.0" \
+            "ndk;29.0.13113456" \
+            "platforms;android-29" \
+            "platforms;android-35"
+
+      - name: Setup Haxe
+        uses: krdlab/setup-haxe@v1
+        with:
+          haxe-version: 4.3.6
+
+      - name: Setup haxelib directory
+        run: haxelib setup ~/haxelib
+
+      # Forks oficiales de FunkinCrew (como dicen los docs)
+      - name: Install haxelib (FunkinCrew fork)
+        run: haxelib --global git haxelib https://github.com/FunkinCrew/haxelib.git
+
+      - name: Install hmm (FunkinCrew fork)
+        run: haxelib --global git hmm https://github.com/FunkinCrew/hmm.git
+
+      # hxcpp desde git — la 4.3.2 de haxelib no compila con NDK 29
+      - name: Install hxcpp from GitHub
+        run: haxelib git hxcpp https://github.com/HaxeFoundation/hxcpp.git
+
+      - name: Install project dependencies via hmm
+        run: haxelib --global run hmm install
+
+      - name: Configure Lime for Android
+        run: |
+          export ANDROID_NDK_ROOT=$ANDROID_HOME/ndk/29.0.13113456
+          haxelib run lime config ANDROID_SDK $ANDROID_HOME
+          haxelib run lime config ANDROID_NDK_ROOT $ANDROID_NDK_ROOT
+          haxelib run lime config JAVA_HOME $JAVA_HOME
+          haxelib run lime config ANDROID_SETUP true
+
+      - name: Build APK
+        run: |
+          export ANDROID_SDK_ROOT=$ANDROID_HOME
+          export ANDROID_NDK_ROOT=$ANDROID_HOME/ndk/29.0.13113456
+          haxelib run lime build android -v -release -DEXCLUDE_ARMV7 -DEXCLUDE_ASTC_TEXTURES
+
+      - name: Upload APK artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ReFunked-android-arm64
+          path: export/release/android/bin/app/build/outputs/apk/release/*.apk
+          retention-days: 7

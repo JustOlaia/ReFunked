@@ -40,19 +40,48 @@ jobs:
       - name: Setup haxelib directory
         run: haxelib setup ~/haxelib
 
-      # Forks oficiales de FunkinCrew (como dicen los docs)
       - name: Install haxelib (FunkinCrew fork)
         run: haxelib --global git haxelib https://github.com/FunkinCrew/haxelib.git
 
       - name: Install hmm (FunkinCrew fork)
         run: haxelib --global git hmm https://github.com/FunkinCrew/hmm.git
 
-      # hxcpp desde git — la 4.3.2 de haxelib no compila con NDK 29
       - name: Install hxcpp from GitHub
         run: haxelib git hxcpp https://github.com/HaxeFoundation/hxcpp.git
 
+      # Cache de haxelibs — se invalida solo si cambia hmm.json
+      - name: Cache haxelibs
+        id: cache-haxelibs
+        uses: actions/cache@v4
+        with:
+          path: ~/haxelib
+          key: haxelibs-${{ hashFiles('hmm.json') }}
+
       - name: Install project dependencies via hmm
+        if: steps.cache-haxelibs.outputs.cache-hit != 'true'
         run: haxelib --global run hmm install
+
+      # Cache del ndll de lime — se invalida si cambia la version de lime
+      - name: Cache Lime ndll
+        id: cache-lime-ndll
+        uses: actions/cache@v4
+        with:
+          path: ~/haxelib/lime
+          key: lime-ndll-${{ hashFiles('hmm.json') }}-${{ runner.os }}
+
+      - name: Rebuild Lime ndll
+        if: steps.cache-lime-ndll.outputs.cache-hit != 'true'
+        run: haxelib run lime rebuild cpp
+
+      # Cache de hxcpp compiled — el mas pesado, tarda mucho la primera vez
+      - name: Cache hxcpp
+        uses: actions/cache@v4
+        with:
+          path: ~/.hxcpp
+          key: hxcpp-${{ runner.os }}-${{ github.ref_name }}-${{ github.sha }}
+          restore-keys: |
+            hxcpp-${{ runner.os }}-${{ github.ref_name }}-
+            hxcpp-${{ runner.os }}-
 
       - name: Configure Lime for Android
         run: |
@@ -74,3 +103,4 @@ jobs:
           name: ReFunked-android-arm64
           path: export/release/android/bin/app/build/outputs/apk/release/*.apk
           retention-days: 7
+  

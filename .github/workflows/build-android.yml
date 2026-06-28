@@ -80,18 +80,19 @@ jobs:
             build-essential git make autoconf automake libtool \
             pkg-config cmake ninja-build mercurial \
             g++ g++-multilib gcc-multilib \
-            libasound2-dev libpulse-dev libaudio-dev libjack-dev libsndio-dev \
+            libasound2-dev libpulse-dev libjack-dev libsndio-dev \
             libsamplerate0-dev libmikmod-dev libflac-dev libopus-dev \
             libopenal-dev libvorbis-dev libogg-dev \
             libx11-dev libxext-dev libxrandr-dev libxcursor-dev libxfixes-dev \
             libxi-dev libxss-dev libxtst-dev libxinerama-dev libxxf86vm-dev \
-            libxkbcommon-dev libxrender-dev libxcomposite-dev libxdamage-dev \
-            libxv-dev libxvmc-dev libxt-dev libsm-dev libice-dev \
+            libxkbcommon-dev libxkbcommon-x11-dev libxrender-dev \
+            libxcomposite-dev libxdamage-dev libxv-dev libxvmc-dev \
+            libxt-dev libsm-dev libice-dev libxmu-dev \
             libdrm-dev libgbm-dev \
-            libgl1-mesa-dev libglu1-mesa-dev libgles1-mesa-dev libgles2-mesa-dev libegl1-mesa-dev \
+            libgl1-mesa-dev libglu1-mesa-dev libgles2-mesa-dev libegl1-mesa-dev \
             libvulkan-dev vulkan-tools \
-            libdbus-1-dev libibus-1.0-dev libudev-dev libusb-1.0-0-dev libts-dev \
-            libwayland-dev wayland-protocols libdecor-0-dev libxkbcommon-x11-dev \
+            libdbus-1-dev libibus-1.0-dev libudev-dev libusb-1.0-0-dev \
+            libwayland-dev wayland-protocols libdecor-0-dev \
             libpipewire-0.3-dev libspa-0.2-dev \
             libfreetype-dev libfontconfig-dev libharfbuzz-dev libfribidi-dev \
             libthai-dev libpango1.0-dev libcairo2-dev \
@@ -99,8 +100,10 @@ jobs:
             libavcodec-dev libavformat-dev libavutil-dev libswscale-dev \
             libssl-dev libcurl4-openssl-dev \
             libglib2.0-dev libgdk-pixbuf2.0-dev \
-            libmbedtls-dev \
-            libunwind-dev \
+            libmbedtls-dev libunwind-dev \
+            libglew-dev libglfw3-dev \
+            libsndfile1-dev libopenal-dev \
+            libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev \
             libc6-dev libstdc++-12-dev \
             neko
 

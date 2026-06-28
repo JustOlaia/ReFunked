@@ -37,8 +37,11 @@ jobs:
         with:
           haxe-version: 4.3.6
 
-      - name: Setup haxelib directory
-        run: haxelib setup ~/haxelib
+      - name: Setup haxelib
+        run: |
+          haxelib setup ~/haxelib
+          # crea .haxelib local en el repo para que hxcpp git quede relativo al proyecto
+          haxelib newrepo
 
       - name: Install haxelib (FunkinCrew fork)
         run: haxelib --global git haxelib https://github.com/FunkinCrew/haxelib.git
@@ -46,31 +49,28 @@ jobs:
       - name: Install hmm (FunkinCrew fork)
         run: haxelib --global git hmm https://github.com/FunkinCrew/hmm.git
 
-      - name: Install hxcpp from GitHub
-        run: haxelib git hxcpp https://github.com/HaxeFoundation/hxcpp.git
-
       - name: Cache haxelibs
         id: cache-haxelibs
         uses: actions/cache@v4
         with:
-          path: ~/haxelib
+          path: .haxelib
           key: haxelibs-${{ hashFiles('hmm.json') }}
 
       - name: Install project dependencies via hmm
         if: steps.cache-haxelibs.outputs.cache-hit != 'true'
         run: haxelib --global run hmm install
 
-      # Requerido cuando hxcpp viene de git en vez de haxelib release
+      # hxcpp desde git necesita compilar sus tools primero
       - name: Build hxcpp tools
         run: |
-          cd ~/haxelib/hxcpp/git/tools/hxcpp
+          cd .haxelib/hxcpp/git/tools/hxcpp
           haxe compile.hxml
 
       - name: Cache Lime ndll
         id: cache-lime-ndll
         uses: actions/cache@v4
         with:
-          path: ~/haxelib/lime
+          path: .haxelib/lime
           key: lime-ndll-${{ hashFiles('hmm.json') }}-${{ runner.os }}
 
       - name: Rebuild Lime ndll

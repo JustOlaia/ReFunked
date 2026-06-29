@@ -314,6 +314,11 @@ class FileUtil
     }, { name: defaultFileName, bytes: data });
     return true;
     #else
+      trace('shit not found yoo');
+      if (onCancel != null) onCancel();
+    return false;
+    #end
+      else
     FileDialog.saveFile(Lib.current.stage.window, function(filepath:String, filter):Void
     {
       if (filepath != null)

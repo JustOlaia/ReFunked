@@ -137,9 +137,13 @@ jobs:
           export ANDROID_NDK_ROOT=$ANDROID_HOME/ndk/29.0.13113456
           haxelib run lime build android -v -release -DEXCLUDE_ARMV7 -DEXCLUDE_ASTC_TEXTURES
 
+      - name: Find APKs
+        run: find export/release/android -name "*.apk" 2>/dev/null || echo "No APKs found"
+
       - name: Upload APK artifact
         uses: actions/upload-artifact@v4
         with:
           name: ReFunked-android-arm64
-          path: export/release/android/bin/app/build/outputs/apk/release/*.apk
+          path: export/release/android/bin/app/build/outputs/apk/
           retention-days: 7
+          if-no-files-found: error

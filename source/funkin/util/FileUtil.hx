@@ -318,7 +318,7 @@ class FileUtil
       if (onCancel != null) onCancel();
     return false;
     #end
-      else
+    #else
     FileDialog.saveFile(Lib.current.stage.window, function(filepath:String, filter):Void
     {
       if (filepath != null)

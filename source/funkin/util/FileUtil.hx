@@ -300,6 +300,7 @@ class FileUtil
 
     return false;
     #elseif android
+    #if FEATURE_HAXEUI
     haxe.ui.containers.dialogs.Dialogs.saveFile(function(button, result, path):Void
     {
       if (result)

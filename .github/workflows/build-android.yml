@@ -76,6 +76,8 @@ jobs:
       - name: Install Linux build dependencies
         run: |
           sudo apt-get update
+          sudo dpkg --add-architecture i386
+          sudo apt-get update
           sudo apt-get install -y \
             build-essential git make autoconf automake libtool \
             pkg-config cmake ninja-build mercurial \
@@ -91,7 +93,7 @@ jobs:
             libdrm-dev libgbm-dev \
             libgl1-mesa-dev libglu1-mesa-dev libgles2-mesa-dev libegl1-mesa-dev \
             libvulkan-dev vulkan-tools \
-            libdbus-1-dev libibus-1.0-dev libudev-dev libusb-1.0-0-dev \
+            libdbus-1-dev libdbus-1-dev:i386 libibus-1.0-dev libudev-dev libusb-1.0-0-dev \
             libwayland-dev wayland-protocols libdecor-0-dev \
             libpipewire-0.3-dev libspa-0.2-dev \
             libfreetype-dev libfontconfig-dev libharfbuzz-dev libfribidi-dev \

@@ -897,7 +897,7 @@ class Project extends HXProject
     // Debug editors aren't built to work on web or mobile right now.
     FEATURE_DEBUG_MENU.apply(this, !(isWeb() || isMobile()));
     FEATURE_ANIMATION_EDITOR.apply(this, !(isWeb() || isMobile()));
-    FEATURE_CHART_EDITOR.apply(this, !(isWeb() || isMobile()) || isAndroid());
+    FEATURE_CHART_EDITOR.apply(this, !(isWeb() || isMobile());
     FEATURE_STAGE_EDITOR.apply(this, !(isWeb() || isMobile()));
     FEATURE_HAXEUI.apply(this, FEATURE_ANIMATION_EDITOR.isEnabled(this)
       || FEATURE_CHART_EDITOR.isEnabled(this)

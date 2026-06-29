@@ -145,5 +145,5 @@ jobs:
         with:
           name: ReFunked-android-arm64
           path: export/release/android/bin/app/build/outputs/apk/
-          retention-days: 7
+          retention-days: 8
           if-no-files-found: error

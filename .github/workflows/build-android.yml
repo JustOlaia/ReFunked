@@ -60,6 +60,13 @@ jobs:
         if: steps.cache-haxelibs.outputs.cache-hit != 'true'
         run: haxelib --global run hmm install
 
+      # Runs every build (cache hit or not) so it self-heals even if an older
+      # cached .haxelib/lime was populated before submodules were initialized.
+      - name: Init Lime's native submodules (SDL, etc.)
+        run: |
+          cd .haxelib/lime/git
+          git submodule update --init --recursive
+
       # hxcpp desde git necesita compilar sus tools primero
       - name: Build hxcpp tools
         run: |

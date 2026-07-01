@@ -54,7 +54,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: .haxelib
-          key: haxelibs-${{ hashFiles('hmm.json') }}
+          key: haxelibs-v2-${{ hashFiles('hmm.json') }}
 
       - name: Install project dependencies via hmm
         if: steps.cache-haxelibs.outputs.cache-hit != 'true'
@@ -152,5 +152,5 @@ jobs:
         with:
           name: ReFunked-android-arm64
           path: export/release/android/bin/app/build/outputs/apk/
-          retention-days: 9
+          retention-days: 7
           if-no-files-found: error
